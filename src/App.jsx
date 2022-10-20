@@ -1,66 +1,52 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
 import './App.css'
+import Form from './components/Form';
+import { List } from './components/List';
 
 function App() {
 
-  const [todo, setTodo] = useState({ value: ''})
+  const [todo, setTodo] = useState({ value: '' })
   const [todos, setTodos] = useState([])
 
-  const {value} = todo;
+  const { value } = todo;
 
   const handleTodo = (event) => {
-    setTodo({ value: event.target.value})
+    setTodo({ value: event.target.value })
   }
 
   const addTodo = (event) => {
     event.preventDefault()
-    if(value === ''){
+    if (value === '') {
       alert('eu flaco esto esta vaciaso')
       return
     }
-    setTodos([...todos, value])
+    setTodos([...todos, { text: value, confirmed: false, id: Math.random() * 1000 }])
     setTodo({ value: '' })
   }
 
   const deleteTodo = (id) => {
-    setTodos(todos.filter((index) => index != id))
+    setTodos(todos.filter((todo) => todo.id != id))
   }
 
+  const handleConfirm = (itemId) => {
+    console.log(itemId);
+    setTodos(todos.map(item => {
+      if (item.id === itemId) {
+        return { ...item, confirmed: !item.confirmed }
+      }
+      return item;
+    }))
+  }
 
-  //TODO: en vez de eliminarlos, tacharlos con una clase de CSS
-  //TODO: llevar todo a componentes
   return (
     <div className="App">
       <section className="welcome">
         Welcome to the ToDo List
       </section>
-      <section className="form">
-        <form action="">
-          <label htmlFor="todo">ToDo: </label>
-          <input value={todo.value} onChange={handleTodo} id="todo" type="text" />
-          <button onClick={addTodo} className="addTodo">
-            Add ToDo
-          </button>
-          <div>
 
-          </div>
-        </form>
-      </section>
+      <Form todo={todo} handleTodo={handleTodo} addTodo={addTodo} />
 
-      <section className="list">
-        <ul>
-          {todos.map((el, i) =>
-            <div key={i}>
-              <li>
-                {el} 
-                <button onClick={() => deleteTodo(i)} className="deleteTodo">
-                  Delete ToDo
-                </button>
-              </li>
-            </div>)}
-        </ul>
-      </section>
+      <List todos={todos} deleteTodo={deleteTodo} handleConfirm={handleConfirm} />
     </div>
   )
 }
