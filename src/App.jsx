@@ -1,7 +1,10 @@
 import { useState } from 'react'
 import './App.css'
 import Form from './components/Form';
-import { List } from './components/List';
+import { ToDoList } from './components/ToDoList';
+
+// Chakra UI
+import { Container, Heading } from '@chakra-ui/react'
 
 function App() {
 
@@ -40,13 +43,15 @@ function App() {
 
   return (
     <div className="App">
-      <section className="welcome">
+      <Heading mb={5}>
         Welcome to the ToDo List
-      </section>
+      </Heading>
+      <Container>
+        <Form todo={todo} handleTodo={handleTodo} addTodo={addTodo} />
 
-      <Form todo={todo} handleTodo={handleTodo} addTodo={addTodo} />
+        <ToDoList todos={todos} deleteTodo={deleteTodo} handleConfirm={handleConfirm} />
+      </Container>
 
-      <List todos={todos} deleteTodo={deleteTodo} handleConfirm={handleConfirm} />
     </div>
   )
 }

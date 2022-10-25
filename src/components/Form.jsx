@@ -1,19 +1,27 @@
 import React from 'react'
 
-function Form({todo, handleTodo, addTodo}) {
-  return (
-    <section className="form">
-        <form action="">
-          <label htmlFor="todo">ToDo: </label>
-          <input value={todo.value} onChange={handleTodo} id="todo" type="text" />
-          <button onClick={addTodo} className="addTodo">
-            Add ToDo
-          </button>
-          <div>
+// Chakra UI
+import {
+  Box,
+  HStack,
+  Stack,
+  FormControl,
+  FormLabel,
+  Input,
+  Button
+} from '@chakra-ui/react'
 
-          </div>
-        </form>
-      </section>
+function Form({ todo, handleTodo, addTodo }) {
+  return (
+    <FormControl>
+      <HStack>
+        <FormLabel>
+          ToDo:
+        </FormLabel>
+        <Input value={todo.value} onChange={handleTodo} id="todo" type="text"></Input>
+        <Button onClick={addTodo}>Add ToDo</Button>
+      </HStack>
+    </FormControl>
   )
 }
 
