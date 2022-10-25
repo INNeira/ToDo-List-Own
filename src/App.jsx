@@ -4,11 +4,12 @@ import Form from "./components/Form";
 import { ToDoList } from "./components/ToDoList";
 
 // Chakra UI
-import { Box, Container, Flex, Heading } from "@chakra-ui/react";
+import { Box, Container, Flex, Heading, useToast } from "@chakra-ui/react";
 
 function App() {
   const [todo, setTodo] = useState({ value: "" });
   const [todos, setTodos] = useState([]);
+  const toast = useToast();
 
   const { value } = todo;
 
@@ -18,8 +19,15 @@ function App() {
 
   const addTodo = (event) => {
     event.preventDefault();
-    if (value === "") {
-      alert("eu flaco esto esta vaciaso");
+    if (value.trim() === "") {
+      toast({
+        title: "Error",
+        description: "No podes mandar las cosas vacias vago",
+        status: "error",
+        position: 'top',
+        duration: 9000,
+        isClosable: true,
+      });
       return;
     }
     setTodos([
